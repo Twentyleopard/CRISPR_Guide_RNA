@@ -146,7 +146,7 @@ class CasModel():
             [folat] -- delta G value
         """
         dg = 0
-        for i in range(len(cr_rna)): 
+        for i in range(len(cr_rna)):
             pos = 20 - i # TODO: magic number
             if cr_rna[i] == target_seq[i]:
                 continue
@@ -196,13 +196,15 @@ class CasModel():
 
         counter = 0
 
+        non_nucleotide_count = [] # Added
         while counter < (len(full_sequence)-length):
             word = full_sequence[counter: counter+length]
             try:
                 positions_at_mers[word].append(counter+length)
             except:
-                logger.error('Genome sequence contains non-nucleotide character')
+                non_nucleotide_count.append(['Genome sequence contains non-nucleotide character'])
             counter += 1
+        logger.error(str(str(len(non_nucleotide_count)) + ' non-nucleotide characters identified'))
 
         return positions_at_mers
 

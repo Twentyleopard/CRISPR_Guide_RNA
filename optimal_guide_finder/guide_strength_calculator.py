@@ -3,6 +3,7 @@ import time
 from multiprocessing import Process, Queue, Pool
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 from optimal_guide_finder.cas_model import CasModel
 import logging
 logger = logging.getLogger(__name__)
@@ -29,7 +30,7 @@ def initalize_model(guide_info, filename, num_threads=None):
 
     pool = Pool(processes=num_threads)
     results = []
-    for gene in guide_info:
+    for gene in tqdm(guide_info):
         for i, guide in enumerate(guide_info[gene][0]):
             guide_data = pd.Series([guide, gene, guide_info[gene][1][i], guide_info[gene][2][i]],
                                    index=["Guide Sequence", "Gene/ORF Name", "Location in Gene", "Strand"])
