@@ -7,6 +7,7 @@ from Bio import SeqIO
 from numba import types
 from numba import jit, float64, int32
 import logging
+from tqdm import tqdm
 logger = logging.getLogger(__name__)
 
 class CasModel():
@@ -196,15 +197,15 @@ class CasModel():
 
         counter = 0
 
-        non_nucleotide_count = [] # Added
+        non_nucleotide_count = 0 # Added
         while counter < (len(full_sequence)-length):
             word = full_sequence[counter: counter+length]
             try:
                 positions_at_mers[word].append(counter+length)
-            except:
-                non_nucleotide_count.append(['Genome sequence contains non-nucleotide character'])
+            except KeyError:
+                non_nucleotide_count += 1
             counter += 1
-        logger.error(str(str(len(non_nucleotide_count)) + ' non-nucleotide characters identified'))
+        logger.error(str(str(non_nucleotide_count) + ' non-nucleotide characters identified'))
 
         return positions_at_mers
 
@@ -222,6 +223,7 @@ class CasModel():
         target_sequence_list = []
         all_mers = list(positions_at_mers.keys())
         mer_length = len(all_mers[0])
+        mers_omitted_count = 0
         list_of_mers_with_pam = [
             mer + pam_seq for mer in self._mers(mer_length - len(pam_seq))]
         for mer_with_pam in list_of_mers_with_pam:
@@ -232,5 +234,10 @@ class CasModel():
                 # Does not account for circular DNAs
                 if begin > 0 and end < len(full_sequence):
                     target_sequence = full_sequence[begin: end]
-                    target_sequence_list.append((target_sequence, nt))
+                    if set(target_sequence).issubset('ATCG'):
+                        target_sequence_list.append((target_sequence, nt))
+                        # print(target_sequence)
+                    else:
+                        mers_omitted_count += 1
+        # print(mers_omitted_count)
         return target_sequence_list
