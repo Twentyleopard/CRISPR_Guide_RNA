@@ -120,13 +120,20 @@ class CasModel():
 
         positions_at_mers = self._identify_nucleotide_positions_of_mers(full_sequence, 10)
 
+        logger.info("Identifying target sites...")
         genome_dictionary[filename] = {}
         target_sequence_list = []
+        mers_omitted_tally = 0
 
-        for full_pam in self.get_all_pams():
-            target_sequence_list = \
+        for full_pam in tqdm(self.get_all_pams()):
+            target_list_output = \
                 self._identify_target_sequences_matching_pam(full_pam, positions_at_mers, full_sequence)
+            target_sequence_list = target_list_output[0]
+                # self._identify_target_sequences_matching_pam(full_pam, positions_at_mers, full_sequence)[0]
+            mers_omitted_tally += target_list_output[1]
             genome_dictionary[filename][full_pam] = target_sequence_list
+
+        logger.error(str(str(mers_omitted_tally) + ' k-mers with non-nucleotide characters omitted from hashtable'))
 
         self.genome_dictionary = genome_dictionary
 
@@ -205,7 +212,7 @@ class CasModel():
             except KeyError:
                 non_nucleotide_count += 1
             counter += 1
-        logger.error(str(str(non_nucleotide_count) + ' non-nucleotide characters identified'))
+        logger.error(str(str(non_nucleotide_count) + ' k-mers with non-nucleotide characters identified'))
 
         return positions_at_mers
 
@@ -236,8 +243,9 @@ class CasModel():
                     target_sequence = full_sequence[begin: end]
                     if set(target_sequence).issubset('ATCG'):
                         target_sequence_list.append((target_sequence, nt))
-                        # print(target_sequence)
+                        # print(target_sequence, ' : ', nt)
                     else:
                         mers_omitted_count += 1
         # print(mers_omitted_count)
-        return target_sequence_list
+        target_list_output = [target_sequence_list, mers_omitted_count]
+        return target_list_output
