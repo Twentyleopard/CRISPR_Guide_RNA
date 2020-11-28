@@ -56,6 +56,6 @@ Need something? Send me an email at Raghuvanshi.Siddarth@gmail.com or avery.noon
 
 ## References
 
-Farasat, I., & Salis, H. M. (2016). A Biophysical Model of CRISPR/Cas9 Activity for Rational Design of Genome Editing and Gene          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Regulation. _PLOS Computational Biology_, 12(1), e1004724. doi:10.1371/journal.pcbi.1004724
+Farasat, I., & Salis, H. M. (2016). A Biophysical Model of CRISPR/Cas9 Activity for Rational Design of Genome Editing and Gene          Regulation. _PLOS Computational Biology_, 12(1), e1004724. doi:10.1371/journal.pcbi.1004724
 
-Doench, J. G., Fusi, N., Sullender, M., Hegde, M., Vaimberg, E. W., Donovan, K. F., . . . Root, D. E. (2016). Optimized sgRNA design to &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximize activity and minimize off-target effects of CRISPR-Cas9. _Nature biotechnology_, 34, 184. doi:10.1038/nbt.3437
+Doench, J. G., Fusi, N., Sullender, M., Hegde, M., Vaimberg, E. W., Donovan, K. F., . . . Root, D. E. (2016). Optimized sgRNA design to maximize activity and minimize off-target effects of CRISPR-Cas9. _Nature biotechnology_, 34, 184. doi:10.1038/nbt.3437
