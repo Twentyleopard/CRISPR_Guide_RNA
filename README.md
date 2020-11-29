@@ -52,7 +52,7 @@ sgrnable -t data/Fasta_Files/GFP.fasta -g data/Fasta_Files/E_coli_MG1655_genome.
 
 ## Contact
 
-Need something? Send me an email at Raghuvanshi.Siddarth@gmail.com or avery.noonan@ubc.ca
+Need something? Send me an email at Raghuvanshi.Siddarth@gmail.com
 
 ## References
 
