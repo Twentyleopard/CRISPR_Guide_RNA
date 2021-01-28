@@ -5,15 +5,15 @@ Entry point to the program
 - Generate Potential Guides
 - Run through biophysical model and report results
 """
-import argparse
 import os
+import logging
+import argparse
 import numpy as np
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from optimal_guide_finder import guide_generator
 from optimal_guide_finder import guide_strength_calculator
-import logging
 
 def init_parser():
     """
@@ -45,32 +45,33 @@ def init_parser():
                              # Leave blank to see all possible guides and off target effects from your sequence""")
     parser.add_argument("-threads", required=False, default=None, type=int,
                         help="""Number of threads to use when running the program""")
+    parser.add_argument("-threads", required=False, default=None, type=int,
+                        help="""Number of threads to use when running the program""")
     parser.add_argument("-c", "--copy_number", required=False, default=1, nargs='+',
                         help="""Number of copies of target gene present""")
 
     return parser
 
-def get_sequence(args):
+def get_sequence(target_sequence, genome_sequence, copy_number):
     """
     Returns the upper case sequences as strings from the files given as arguments.
     Also combines the various genome sequences
     """
     # Reads the file using biopython and creates an object called target
-    target_dict = SeqIO.to_dict(SeqIO.parse(
-        args.target_sequence, "fasta"))
+    target_dict = SeqIO.to_dict(SeqIO.parse(target_sequence, "fasta"))
 
     for name in target_dict:
         target_dict[name] = target_dict[name].seq.upper()
 
     # Reads the Genome files using biopython and combines them into one genome object
     genome = SeqRecord(Seq(""))
-    for i in range(len(args.genome_sequence)):
-        genome_parts = SeqIO.parse(args.genome_sequence[i], "fasta")
+    for i in range(len(genome_sequence)):
+        genome_parts = SeqIO.parse(genome_sequence[i], "fasta")
         for part in genome_parts:
-            if args.copy_number == 1:
+            if copy_number == 1:
                 genome.seq = genome.seq + part.seq
             else:
-                genome.seq = genome.seq + part.seq * int(args.copy_number[i])
+                genome.seq = genome.seq + part.seq * int(copy_number[i])
 
     return target_dict, genome.seq.upper()
 
@@ -100,7 +101,7 @@ def main():
         pass
 
     # Get the sequences in a Seq format from user fasta or genebank files
-    target_dict, genome = get_sequence(args)
+    target_dict, genome = get_sequence(args.target_sequence, args.genome_sequence, args.copy_number)
 
     ref_record = SeqRecord(genome,
                            id="refgenome",
@@ -110,7 +111,7 @@ def main():
     SeqIO.write(ref_record, genome_location, "fasta")
 
     # Select the guides based on the purpose and the azimuth model
-    guide_list = guide_generator.select_guides(target_dict, args)
+    guide_list = guide_generator.select_guides(target_dict, args.purpose, args.azimuth_cutoff)
     #Initialize the logger
     initialize_logger(args.output_path)
 
