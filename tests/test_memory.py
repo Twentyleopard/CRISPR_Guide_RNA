@@ -3,7 +3,6 @@ Memory usage tests module
 """
 import time
 import unittest
-from threading import Thread
 from concurrent.futures import ThreadPoolExecutor
 from optimal_guide_finder import memory_limit
 

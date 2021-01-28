@@ -12,8 +12,7 @@ import numpy as np
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-from optimal_guide_finder import guide_generator
-from optimal_guide_finder import guide_strength_calculator
+from optimal_guide_finder import guide_generator, guide_strength_calculator, memory_limit
 
 def init_parser():
     """
@@ -45,8 +44,9 @@ def init_parser():
                              # Leave blank to see all possible guides and off target effects from your sequence""")
     parser.add_argument("-threads", required=False, default=None, type=int,
                         help="""Number of threads to use when running the program""")
-    parser.add_argument("-threads", required=False, default=None, type=int,
-                        help="""Number of threads to use when running the program""")
+    parser.add_argument("-m", "--max_memory", required=False, default=None, type=float,
+                        help="""Maximum memory used by the tool in GiB,
+                                defaults to using whatever memory is available in the system""")
     parser.add_argument("-c", "--copy_number", required=False, default=1, nargs='+',
                         help="""Number of copies of target gene present""")
 
@@ -92,6 +92,10 @@ def main():
 
     # Creating a variable to make the values easily accessible
     args = parser.parse_args()
+
+    # set memory limit if passed in
+    if args.max_memory is not None:
+        memory_limit.set_limit(args.max_memory)
 
     #Create the path of the created genome file
     genome_location = args.output_path + '/Run_Genome'
