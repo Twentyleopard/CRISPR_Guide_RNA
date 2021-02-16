@@ -43,7 +43,7 @@ class TestMemoryThresholds(unittest.TestCase):
         Test that set memory limit raises an error when limit is passed
         """
         mem_size = 0.05 # 50 mb
-        test_size = 50 * 1024 * 1024  # 50 mb
+        test_size = 500 * 1024 * 1024  # 500 mb
 
         with self.assertRaises(MemoryError):
             memory_limit.set_limit(mem_size)
@@ -54,7 +54,7 @@ class TestMemoryThresholds(unittest.TestCase):
         Test that set memory limit raises an error when limit is passed in multiple threads
         """
         mem_size = 0.05 # 50 mb
-        test_size = 50 * 1024 * 1024  # 50 mb
+        test_size = 500 * 1024 * 1024  # 500 mb
 
         with self.assertRaises(MemoryError):
             memory_limit.set_limit(mem_size)
