@@ -68,5 +68,5 @@ class TestMemoryThresholds(unittest.TestCase):
 
         size {int} --variable size in bytes
         """
-        test_var = 'x' * size
+        test_var = bytearray(size)
         time.sleep(0.05)
