@@ -1,6 +1,6 @@
 import math
 import time
-from multiprocessing import Process, Queue, Pool
+from multiprocessing.pool import ThreadPool
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -29,7 +29,7 @@ def initalize_model(guide_info, filename, num_threads=None):
     __start = time.time()
 
     # TODO: Change this to use concurrent.futures to propagate the mem exception
-    pool = Pool(processes=num_threads)
+    pool = ThreadPool(processes=num_threads)
     results = []
     for gene in guide_info:
         for i, guide in enumerate(guide_info[gene][0]):
