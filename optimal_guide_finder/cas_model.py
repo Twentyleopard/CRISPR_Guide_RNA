@@ -4,8 +4,7 @@ Module responsible for calculating the per guide binding
 import numpy as np
 import scipy.io
 from Bio import SeqIO
-from numba import types
-from numba import jit, float64, int32
+from numba import jit
 import logging
 from tqdm import tqdm
 logger = logging.getLogger(__name__)

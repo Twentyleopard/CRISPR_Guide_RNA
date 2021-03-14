@@ -142,7 +142,10 @@ def main():
 
     # Build and run the model
     logger.info("Initializing binding strength model..")
-    results_df = guide_strength_calculator.initalize_model(guide_list, genome_location, num_threads=args.num_threads)
+    model = guide_strength_calculator.initalize_model(genome_location)
+
+    logger.info("Processing guides off-target binding...")
+    results_df = guide_strength_calculator.process_guides(model, guide_list, num_threads=args.num_threads)
 
     #generate and append Rank array
     logger.info("Generating result file..")
