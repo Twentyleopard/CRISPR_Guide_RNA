@@ -91,7 +91,7 @@ def set_limit_unix(size):
         size {int} -- Memory limit in bytes
     """
     import resource
-    _, hard = resource.getrlimit(resource.RLIMIT_AS)
+    soft, hard = resource.getrlimit(resource.RLIMIT_AS)
     resource.setrlimit(resource.RLIMIT_AS, (size, hard))
 
 def set_limit(size):

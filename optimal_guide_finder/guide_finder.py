@@ -88,16 +88,19 @@ def main():
     """
     Main workflow
     """
+    # init parser and logger
     parser = init_parser()
-
-    # Creating a variable to make the values easily accessible
     args = parser.parse_args()
+
+    initialize_logger(args.output_path)
+    logger = logging.getLogger(__name__)
 
     # set memory limit if passed in
     if args.max_memory is not None:
         memory_limit.set_limit(args.max_memory)
 
     #Create the path of the created genome file
+    logger.info("Creating genome file...")
     genome_location = args.output_path + '/Run_Genome'
     try:
         os.makedirs(args.output_path)
@@ -105,6 +108,7 @@ def main():
         pass
 
     # Get the sequences in a Seq format from user fasta or genebank files
+    logger.info("Generating target dictionary..")
     target_dict, genome = get_sequence(args.target_sequence, args.genome_sequence, args.copy_number)
 
     ref_record = SeqRecord(genome,
@@ -115,15 +119,16 @@ def main():
     SeqIO.write(ref_record, genome_location, "fasta")
 
     # Select the guides based on the purpose and the azimuth model
+    logger.info("Selecting initial guides..")
     guide_list = guide_generator.select_guides(target_dict, args.purpose, args.azimuth_cutoff)
-    #Initialize the logger
-    initialize_logger(args.output_path)
 
     # Build and run the model
+    logger.info("Initializing binding strength model..")
     results_df = guide_strength_calculator.initalize_model(guide_list,
                                                            genome_location,
                                                            num_threads=args.threads)
     #generate and append Rank array
+    logger.info("Generating result file..")
     results_df.sort_values(by=['Gene/ORF Name', 'Entropy Score'], inplace=True)
     results_df.drop_duplicates(inplace=True)
     rank_array = []
