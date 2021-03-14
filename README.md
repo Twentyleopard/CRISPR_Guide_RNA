@@ -42,7 +42,7 @@ To start a test run targeting GFP in E.Coli genome, navigate to repository root 
 ```
 pip install .
 
-sgrnable -t tests/data/gfp.fasta -g tests/data/ecoli_genome.fasta tests/data/gfp.fasta
+sgrnable -t tests/data/gfp.fasta -g tests/data/ecoli_genome.fasta tests/data/gfp.fasta -th 4
 ```
 
 ## Authors
