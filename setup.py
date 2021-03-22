@@ -34,7 +34,7 @@ setuptools.setup(
         "numpy",
         "pandas",
         "psutil",
-        "scikit-learn",
+        "scikit-learn==0.20.4",
         "scipy",
         "tqdm",
     ],
