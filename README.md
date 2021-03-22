@@ -32,6 +32,13 @@ sgrnable -t TARGET_FILE -g GENOME_FILE
 conda deactivate
 ```
 
+### Running Tests
+To run package tests, cd into the project directory and run the following command. This installs any missing dependencies and runs package tests.
+
+```
+python setup.py test
+```
+
 ## Quick Run Guide
 
 Ensure that you have a file containing the gene of interest (Target Sequence), the genome of the organism (Genome), and

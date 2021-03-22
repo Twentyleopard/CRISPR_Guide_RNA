@@ -21,6 +21,8 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
     ],
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
     python_requires='>=3.6',
     entry_points={
         "console_scripts": ['sgrnable = optimal_guide_finder.guide_finder:main']
