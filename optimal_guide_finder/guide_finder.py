@@ -131,7 +131,7 @@ def main():
     # create the path for genome file
     logger.info("Creating genome file...")
     genome_location = args.output_dir + '/Run_Genome'
- 
+
     # Get the sequences in a Seq format from user fasta or genebank files
     logger.info("Generating target dictionary..")
     copies = [args.copy_number]*len(args.genome_sequence) if isinstance(args.copy_number, int) else args.copy_number
