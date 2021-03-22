@@ -8,6 +8,8 @@ Entry point to the program
 import os
 import logging
 import argparse
+import time
+import psutil
 import numpy as np
 from Bio import SeqIO
 from Bio.Seq import Seq
@@ -103,6 +105,8 @@ def main():
     """
     Main workflow
     """
+    start_time = time.time()
+
     # init parser
     parser = init_parser()
     args = parser.parse_args()
@@ -158,6 +162,14 @@ def main():
     results_df['Rank in Target Gene'] = rank_array
 
     results_df.to_csv(args.output_path + '/output.csv', index=False)
+
+    process = psutil.Process(os.getpid())
+
+    total_time = time.time() - start_time
+    minutes = int(total_time//60)
+    seconds = int(total_time%60)
+    max_memory = process.memory_info().rss // (1024 * 1024)
+    logger.info("Finished sgRNAble run, total time elapsed (min/sec): %d:%d, max memory usage (MB): %d", minutes, seconds, max_memory)
 
 if __name__ == "__main__":
     main()
