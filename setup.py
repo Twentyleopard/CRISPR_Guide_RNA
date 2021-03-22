@@ -27,4 +27,15 @@ setuptools.setup(
     entry_points={
         "console_scripts": ['sgrnable = optimal_guide_finder.guide_finder:main']
     },
+    install_requires=[
+        "biopython",
+        "matplotlib",
+        "numba",
+        "numpy",
+        "pandas",
+        "psutil",
+        "scikit",
+        "scipy",
+        "tqdm",
+    ],
 )
