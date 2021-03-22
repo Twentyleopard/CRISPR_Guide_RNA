@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="sgRNAble",
-    version="1.0.1",
+    version="1.0.3",
     author="Avery Noonan, Siddarth Raghuvanshi, Ahmed Abdelmoneim",
     author_email="sidr97@gmail.com",
     description="CRISPR-Cas9 single guide RNA generation tool",
@@ -23,7 +23,7 @@ setuptools.setup(
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
-    python_requires='>=3.6',
+    python_requires='==3.7',
     entry_points={
         "console_scripts": ['sgrnable = optimal_guide_finder.guide_finder:main']
     },
